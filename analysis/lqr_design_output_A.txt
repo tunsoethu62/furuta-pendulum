@@ -1,0 +1,14 @@
+weighting A: {'theta': 0.5, 'd': 0.08, 'theta_dot': 3.0, 'd_dot': 5.0, 'u': 15.0}
+w_n = 12.08 rad/s, l_eq = 6.72 cm, K = L_r/l_eq = 1.042
+open-loop eigenvalues (continuous): [-12.83  11.38   0.     0.  ] -> one unstable mode, as expected
+controllability rank: 4
+LQR gains  u = -(k1 theta + k2 d + k3 theta' + k4 d'): [ -27.555 -600.497  -14.217  -44.909]
+closed-loop |eig| (discrete, must be < 1): [0.9308 0.9308 0.9833 0.9833]
+sim K x1.0, upright bias 0 deg, trim True: balanced 3 s | max |theta| 15.2 deg, max |u| 56 rad/s^2 | last 1 s: d rms 0.03 deg, theta range -3.3..-1.4 deg, |u| rms 2 rad/s^2
+sim K x0.8, upright bias 0 deg, trim True: balanced 3 s | max |theta| 18.7 deg, max |u| 56 rad/s^2 | last 1 s: d rms 0.03 deg, theta range -2.9..-1.6 deg, |u| rms 2 rad/s^2
+sim K x1.2, upright bias 0 deg, trim True: balanced 3 s | max |theta| 13.7 deg, max |u| 56 rad/s^2 | last 1 s: d rms 0.04 deg, theta range -4.4..-1.4 deg, |u| rms 3 rad/s^2
+sim K x1.0, upright bias 1 deg, trim False: balanced 8 s | max |theta| 22.4 deg, max |u| 60 rad/s^2 | last 1 s: d rms 0.02 deg, theta range -21.7..-21.7 deg, |u| rms 3 rad/s^2
+sim K x1.0, upright bias 1 deg, trim True: balanced 8 s | max |theta| 22.4 deg, max |u| 60 rad/s^2 | last 1 s: d rms 0.02 deg, theta range -0.5..-0.2 deg, |u| rms 3 rad/s^2
+
+Paste into balance.ino:
+const float K_THETA = -27.5553, K_ALPHA = -600.4973, K_THETA_DOT = -14.2170, K_ALPHA_DOT = -44.9091;

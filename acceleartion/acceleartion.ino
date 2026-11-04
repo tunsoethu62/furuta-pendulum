@@ -23,7 +23,11 @@ const int FULL_STEPS_PER_REV = 200;
 // 8 = 1/8 step
 // 16 = 1/16 step
 // 32 = 1/32 step
-const int MICROSTEPS = 1;
+// Must match the M0/M1/M2 jumpers (confirm with step_test.ino). The static_assert below
+// rejects invalid values (this file used to say 1 while motor_testing said 16).
+const int MICROSTEPS = 16;   // M0=GND, M1=GND, M2=5V -> 1/16 (user-reported); confirm with step_test
+static_assert(MICROSTEPS == 1 || MICROSTEPS == 2 || MICROSTEPS == 4 || MICROSTEPS == 8 || MICROSTEPS == 16 || MICROSTEPS == 32,
+              "Set MICROSTEPS to match the M0-M2 jumpers (use step_test.ino to find it)");
 
 const float STEPS_PER_REV =
     FULL_STEPS_PER_REV * MICROSTEPS;
@@ -146,19 +150,24 @@ void setup() {
   Serial.println("-------------------------");
   Serial.println("Position the arm at 0 degrees");
   Serial.println("before enabling motor power.");
+  Serial.println("Type g to run the test sequence once.");
   Serial.println();
 
   // Program assumes motor starts at 0 deg
   currentSteps = 0;
-
-  delay(3000);
 }
 
 // =====================================
 // MAIN LOOP
 // =====================================
 
+// Runs the +10 / 0 / -10 / 0 sequence ONCE per "g" command (it used to start by itself 3 s after
+// power-up and repeat forever). Note: there is still no acceleration ramp; the step rate is constant.
 void loop() {
+
+  if (!Serial.available()) return;
+  char c = Serial.read();
+  if (c != 'g' && c != 'G') return;
 
   Serial.println("Moving to +10 degrees");
   moveToAngle(TEST_ANGLE);
@@ -174,5 +183,5 @@ void loop() {
 
   Serial.println("Returning to 0 degrees");
   moveToAngle(0);
-  delay(2000);
+  Serial.println("Sequence done. Type g to run again.");
 }

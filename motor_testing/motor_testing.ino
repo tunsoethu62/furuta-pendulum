@@ -2,11 +2,16 @@
 #define DIR_PIN 4
 #define EN_PIN 5
 
-const int MICROSTEPS = 16;
-const int STEPS_PER_REV = 200 * MICROSTEPS;
+// MICROSTEPS must match the DRV8825 M0/M1/M2 jumpers (find it with step_test.ino).
+// Allowed: 1, 2, 4, 8, 16 or 32 (the static_assert below rejects anything else).
+const int MICROSTEPS = 16;   // M0=GND, M1=GND, M2=5V -> 1/16 (user-reported); confirm with step_test
+static_assert(MICROSTEPS == 1 || MICROSTEPS == 2 || MICROSTEPS == 4 || MICROSTEPS == 8 || MICROSTEPS == 16 || MICROSTEPS == 32,
+              "Set MICROSTEPS to match the M0-M2 jumpers (use step_test.ino to find it)");
+const long STEPS_PER_REV = 200L * MICROSTEPS;
 
-// 9 degrees = 80 microsteps
-const int TEST_STEPS = 80;
+// Test move of about 9 degrees, computed from MICROSTEPS (was a fixed 80, which is only 9 deg at 1/16)
+const float TEST_DEG = 9.0;
+const int TEST_STEPS = (int)(TEST_DEG / 360.0 * STEPS_PER_REV + 0.5);
 
 const unsigned long STEP_DELAY_US = 2000;
 
@@ -25,12 +30,12 @@ void moveMotor(int steps, bool direction) {
 void setup() {
   Serial.begin(115200);
 
+  // Write EN HIGH (disabled) BEFORE making it an output; the old order drove EN LOW (enabled) for a moment.
+  digitalWrite(EN_PIN, HIGH);
+  pinMode(EN_PIN, OUTPUT);
+  digitalWrite(STEP_PIN, LOW);
   pinMode(STEP_PIN, OUTPUT);
   pinMode(DIR_PIN, OUTPUT);
-  pinMode(EN_PIN, OUTPUT);
-
-  digitalWrite(STEP_PIN, LOW);
-  digitalWrite(EN_PIN, HIGH);
 
   Serial.println("FURUTA MOTOR TEST");
   Serial.println("Center the horizontal arm first.");

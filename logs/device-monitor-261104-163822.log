@@ -1,0 +1,12 @@
+# swingup-v2.2-qualified-18 EXPERIMENTAL; phase-qualified turns; nonblocking diagnostics
+# pump U_MAX=100.0 V_MAX=4.363323
+# balance U_MAX=60.0 V_MAX=3.141593
+# capture_deg=18.0
+# driver OFF: calibrating hanging down; do not move pendulum
+# z zero, s 3s countdown/swing-up, x/space stop, c calibrate, l log, p status
+# diagnostics schema: swingup/DIAGNOSTICS.md; integer scaled #D records
+#D,275,M,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+#D,4544,M,0,0,0,0,0,0,3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+#D,4832,M,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+#D,7581,M,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+#D,15215,M,0,0,2,0,0,0,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0

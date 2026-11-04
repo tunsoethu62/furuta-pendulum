@@ -1,0 +1,7 @@
+nominal                ok: last 2 s d range -0.06..0.07 deg, theta -0.2..0.1 deg, |u|rms 3
+no deadband            ok: last 2 s d range -0.06..0.06 deg, theta -0.3..0.3 deg, |u|rms 3
+Tc 0.10                ok: last 2 s d range 0.84..0.94 deg, theta -2491.6..-1773.4 deg, |u|rms 100
+Tc 0.10 no deadband    ok: last 2 s d range 0.84..0.94 deg, theta -2491.6..-1773.4 deg, |u|rms 100
+Tc 0.10 + bias 1deg    ok: last 2 s d range 0.87..0.89 deg, theta -2525.4..-1807.2 deg, |u|rms 100
+Tc 0.05                ok: last 2 s d range -5.53..5.53 deg, theta -54.1..54.1 deg, |u|rms 11
+K x0.8 Tc0.1           ok: last 2 s d range -2.34..-2.24 deg, theta -2578.1..-1859.9 deg, |u|rms 100
